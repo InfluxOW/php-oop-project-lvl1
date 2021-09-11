@@ -35,5 +35,8 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
+    },
+    "require": {
+        "tightenco/collect": "^8.34"
     }
 }
