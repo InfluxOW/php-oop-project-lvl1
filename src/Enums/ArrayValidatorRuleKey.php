@@ -8,4 +8,5 @@ class ArrayValidatorRuleKey
 {
     public const VALUE_TYPE = 'value_type';
     public const SIZE_OF = 'size_of';
+    public const SHAPE = 'shape';
 }

@@ -33,4 +33,17 @@ class ArrayValidator extends Validator
 
         return $this;
     }
+
+    public function shape(array $shape): self
+    {
+        $validateShape = static function (array $array) use ($shape): bool {
+            return collect($shape)->every(static function (Validator $validator, string $key) use ($array) {
+                return $validator->isValid($array[$key]);
+            });
+        };
+
+        $this->setValidator($validateShape, ArrayValidatorRuleKey::SHAPE);
+
+        return $this;
+    }
 }

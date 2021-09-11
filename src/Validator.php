@@ -17,22 +17,22 @@ use Influx\Validator\Validators\Validator as ValidatorInterface;
  */
 class Validator
 {
-    /** @var ValidatorInterface[] */
+    /** @var Array<class-string<ValidatorInterface>> */
     private $validators;
 
     public function __construct()
     {
         $this->validators = [
-            StringValidator::getName() => new StringValidator(),
-            NumberValidator::getName() => new NumberValidator(),
-            ArrayValidator::getName() => new ArrayValidator(),
+            StringValidator::getName() => StringValidator::class,
+            NumberValidator::getName() => NumberValidator::class,
+            ArrayValidator::getName() => ArrayValidator::class,
         ];
     }
 
     public function __call(string $name, array $arguments): ValidatorInterface
     {
         if (array_key_exists($name, $this->validators)) {
-            return $this->validators[$name];
+            return new $this->validators[$name]();
         }
 
         throw new Error("Call to undefined method " . $this::class . "::" . $name . "()");

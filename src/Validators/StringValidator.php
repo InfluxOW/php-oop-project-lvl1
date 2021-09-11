@@ -30,7 +30,7 @@ class StringValidator extends Validator
 
     public function minLength(int $minLength): self
     {
-        $this->setValidator(static fn (mixed $value) => strlen($value) > $minLength, StringValidatorRuleKey::MIN_LENGTH);
+        $this->setValidator(static fn (mixed $value) => strlen($value) >= $minLength, StringValidatorRuleKey::MIN_LENGTH);
 
         return $this;
     }

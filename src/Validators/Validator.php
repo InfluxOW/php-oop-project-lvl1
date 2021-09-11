@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Influx\Validator\Validators;
 
-use Tightenco\Collect\Support\Collection;
 use Closure;
-use Exception;
 use Error;
+use Exception;
+use Tightenco\Collect\Support\Collection;
 
 abstract class Validator
 {
@@ -25,9 +25,7 @@ abstract class Validator
     {
         try {
             $isValid = $this->validators->every(fn (Closure $validate) => $validate($value));
-        }
-        catch (Exception|Error)
-        {
+        } catch (Exception | Error) {
             $isValid = false;
         }
 
