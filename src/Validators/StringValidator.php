@@ -18,6 +18,7 @@ class StringValidator extends Validator
 
     public function required(): self
     {
+        $this->allowsNull = false;
         $this->validators->add(static fn (mixed $value) => $value !== '');
 
         return $this;

@@ -24,15 +24,17 @@ class StringValidatorTest extends TestCase
         $this->assertTrue($this->validator->isValid('Test string'));
 
         $this->assertFalse($this->validator->isValid(123456789));
-        $this->assertFalse($this->validator->isValid(null));
         $this->assertFalse($this->validator->isValid([]));
     }
 
     /** @test */
-    public function it_can_verify_if_value_is_empty_string(): void
+    public function it_can_verify_if_value_is_empty_string_or_null(): void
     {
         $this->assertTrue($this->validator->isValid(''));
+        $this->assertTrue($this->validator->isValid(null));
+
         $this->assertFalse($this->validator->required()->isValid(''));
+        $this->assertFalse($this->validator->required()->isValid(null));
     }
 
     /** @test */
