@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Influx\Validator;
 
 use Error;
+use Influx\Validator\Validators\ArrayValidator;
 use Influx\Validator\Validators\NumberValidator;
 use Influx\Validator\Validators\StringValidator;
 use Influx\Validator\Validators\Validator as ValidatorInterface;
@@ -12,6 +13,7 @@ use Influx\Validator\Validators\Validator as ValidatorInterface;
 /**
  * @method StringValidator string()
  * @method NumberValidator number()
+ * @method ArrayValidator array()
  */
 class Validator
 {
@@ -23,6 +25,7 @@ class Validator
         $this->validators = [
             StringValidator::getName() => new StringValidator(),
             NumberValidator::getName() => new NumberValidator(),
+            ArrayValidator::getName() => new ArrayValidator(),
         ];
     }
 
