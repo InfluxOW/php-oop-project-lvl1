@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Influx\Validator\Validators;
 
 class StringValidator extends Validator

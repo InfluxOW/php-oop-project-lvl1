@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Influx\Validator\Validators;
 
 use Tightenco\Collect\Support\Collection;
@@ -14,8 +16,9 @@ abstract class Validator
 
     public function isValid(mixed $value): bool
     {
-        if ($value === null && $this->allowsNull)
+        if ($value === null && $this->allowsNull) {
             return true;
+        }
 
         return $this->validators->every(fn (Closure $validate) => $validate($value));
     }
