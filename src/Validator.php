@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Influx\Validator;
+namespace Hexlet\Validator;
 
 use Closure;
 use Error;
-use Influx\Validator\Validators\ArrayValidator;
-use Influx\Validator\Validators\NumberValidator;
-use Influx\Validator\Validators\StringValidator;
-use Influx\Validator\Validators\Validator as ValidatorInterface;
+use Hexlet\Validator\Validators\ArrayValidator;
+use Hexlet\Validator\Validators\NumberValidator;
+use Hexlet\Validator\Validators\StringValidator;
+use Hexlet\Validator\Validators\Validator as ValidatorInterface;
 
 /**
  * @method StringValidator string()

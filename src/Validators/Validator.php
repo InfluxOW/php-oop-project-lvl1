@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Influx\Validator\Validators;
+namespace Hexlet\Validator\Validators;
 
 use Closure;
 use Error;

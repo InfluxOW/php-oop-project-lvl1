@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Influx\Validator\Validators;
+namespace Hexlet\Validator\Validators;
 
-use Influx\Validator\Enums\StringValidatorRuleKey;
+use Hexlet\Validator\Enums\StringValidatorRuleKey;
 
 class StringValidator extends Validator
 {

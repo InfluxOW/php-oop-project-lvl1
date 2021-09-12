@@ -17,12 +17,12 @@
             "src/helpers.php"
         ],
         "psr-4": {
-            "Influx\\Validator\\": "src/"
+            "Hexlet\\Validator\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Influx\\Validator\\Tests\\": "tests/"
+            "Hexlet\\Validator\\Tests\\": "tests/"
         }
     },
     "require-dev": {

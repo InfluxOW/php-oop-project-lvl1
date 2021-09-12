@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Influx\Validator\Tests;
+namespace Hexlet\Validator\Tests;
 
-use Influx\Validator\Validator;
-use Influx\Validator\Validators\StringValidator;
+use Hexlet\Validator\Validator;
+use Hexlet\Validator\Validators\StringValidator;
 use PHPUnit\Framework\TestCase;
 
 class StringValidatorTest extends TestCase

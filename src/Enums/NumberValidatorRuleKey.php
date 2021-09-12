@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Influx\Validator\Enums;
+namespace Hexlet\Validator\Enums;
 
 class NumberValidatorRuleKey
 {

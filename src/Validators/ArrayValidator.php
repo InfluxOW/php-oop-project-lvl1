@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Influx\Validator\Validators;
+namespace Hexlet\Validator\Validators;
 
-use Influx\Validator\Enums\ArrayValidatorRuleKey;
+use Hexlet\Validator\Enums\ArrayValidatorRuleKey;
 
 class ArrayValidator extends Validator
 {
