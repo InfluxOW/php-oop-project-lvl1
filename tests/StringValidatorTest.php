@@ -51,8 +51,9 @@ class StringValidatorTest extends TestCase
     public function it_can_verify_if_value_is_longer_than_min_length(): void
     {
         $this->assertTrue($this->stringValidator->minLength(10)->isValid('What does the fox say?'));
+        $this->assertTrue($this->stringValidator->minLength(0)->isValid(''));
 
-        $this->assertFalse($this->stringValidator->minLength(0)->isValid(''));
+        $this->assertFalse($this->stringValidator->minLength(1)->isValid(''));
         $this->assertFalse($this->stringValidator->minLength(5)->isValid('Test'));
     }
 
