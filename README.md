@@ -38,7 +38,7 @@ $schema = $v->array()->sizeof(2)->shape([
 $schema->isValid(['name' => 'kolya', 'age' => 100]); // true
 $schema->isValid(['name' => '', 'age' => null]); // false
 
-// custom validation rules
+// custom validation rules for existing validators
 $fn = fn($value, $start) => str_starts_with($value, $start);
 $v->addValidator('string', 'startWith', $fn);
 
@@ -46,4 +46,14 @@ $schema = $v->string()->test('startWith', 'H');
 
 $schema->isValid('exlet'); // false
 $schema->isValid('Hexlet'); // true
+
+// custom validators
+$fn = fn($value, $start) => str_starts_with((string) $value, (string) $start);
+$v->addValidator('customValidator', 'startWith', $fn);
+
+$schema = $v->customValidator()->test('startWith', 5);
+
+$schema->isValid(13); // false
+$schema->isValid('test'); // false
+$schema->isValid(55); // true
 ```
