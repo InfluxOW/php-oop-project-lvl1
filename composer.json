@@ -34,12 +34,14 @@
         "phpstan/phpstan-phpunit": "^0.12.22",
         "phpstan/phpstan": "^0.12.98"
     },
+    "require": {
+        "php": "^8.0",
+        "tightenco/collect": "^8.34"
+    },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "require": {
-        "tightenco/collect": "^8.34"
-    }
+    "minimum-stability": "beta"
 }

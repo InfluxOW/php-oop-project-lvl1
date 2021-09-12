@@ -20,7 +20,7 @@ use Tightenco\Collect\Support\Collection;
 class Validator
 {
     /** @var Collection<class-string<ValidatorInterface>> */
-    private $validators;
+    private Collection $validators;
     /** @var Collection<class-string<ValidatorInterface>> */
     private $customValidators;
 
