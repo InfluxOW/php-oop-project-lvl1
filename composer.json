@@ -13,6 +13,9 @@
         "test": "phpunit tests"
     },
     "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
         "psr-4": {
             "Influx\\Validator\\": "src/"
         }

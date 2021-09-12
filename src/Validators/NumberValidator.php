@@ -29,7 +29,7 @@ class NumberValidator extends Validator
 
     public function positive(): self
     {
-        $this->setValidator(static fn (mixed $value) => $value > 0, NumberValidatorRuleKey::VALUE_TYPE);
+        $this->setValidator(static fn (mixed $value) => $value > 0, NumberValidatorRuleKey::NUMBER_TYPE);
 
         return $this;
     }

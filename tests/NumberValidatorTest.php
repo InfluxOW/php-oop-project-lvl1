@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Influx\Validator\Tests;
 
+use Influx\Validator\Validator;
 use Influx\Validator\Validators\NumberValidator;
 use PHPUnit\Framework\TestCase;
 
@@ -55,5 +56,18 @@ class NumberValidatorTest extends TestCase
 
         $this->assertTrue($complexValidator->isValid(10));
         $this->assertFalse($complexValidator->isValid(-5));
+    }
+
+    /** @test */
+    public function it_can_be_extended_with_custom_validation_rules(): void
+    {
+        $validator = new Validator();
+
+        $fn = static fn($value, $min) => $value >= $min;
+        $validator->addValidator(NumberValidator::getName(), 'min', $fn);
+        $numberValidator = $validator->number()->test('min', 5);
+
+        $this->assertTrue($numberValidator->isValid(6));
+        $this->assertFalse($numberValidator->isValid(4));
     }
 }

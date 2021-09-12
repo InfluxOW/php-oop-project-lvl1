@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Influx\Validator\Tests;
 
+use Influx\Validator\Validator;
 use Influx\Validator\Validators\StringValidator;
 use PHPUnit\Framework\TestCase;
 
@@ -64,5 +65,18 @@ class StringValidatorTest extends TestCase
 
         $this->assertFalse($complexValidator->isValid('What does'));
         $this->assertFalse($complexValidator->isValid('hat does the fox say?'));
+    }
+
+    /** @test */
+    public function it_can_be_extended_with_custom_validation_rules(): void
+    {
+        $validator = new Validator();
+
+        $fn = static fn ($value, $start) => str_starts_with($value, $start);
+        $validator->addValidator(StringValidator::getName(), 'startsWith', $fn);
+        $stringValidator = $validator->string()->test('startsWith', 'H');
+
+        $this->assertTrue($stringValidator->isValid('Hexlet'));
+        $this->assertFalse($stringValidator->isValid('exlet'));
     }
 }

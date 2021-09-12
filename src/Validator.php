@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Influx\Validator;
 
+use Closure;
 use Error;
 use Influx\Validator\Validators\ArrayValidator;
 use Influx\Validator\Validators\NumberValidator;
@@ -36,5 +37,14 @@ class Validator
         }
 
         throw new Error("Call to undefined method " . $this::class . "::" . $name . "()");
+    }
+
+    public function addValidator(string $name, string $method, Closure $validate): void
+    {
+        if (array_key_exists($name, $this->validators)) {
+            /** @var ValidatorInterface $validator */
+            $validator = $this->validators[$name];
+            $validator::setCustomValidationRule($validate, $method);
+        }
     }
 }
