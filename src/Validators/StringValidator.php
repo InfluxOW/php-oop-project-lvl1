@@ -8,21 +8,18 @@ use Hexlet\Validator\Enums\StringValidatorRuleKey;
 
 class StringValidator extends Validator
 {
+    protected static string $name = 'string';
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->setValidator(static fn (mixed $value) => is_string($value) || is_null($value), StringValidatorRuleKey::VALUE_TYPE);
-    }
-
-    public static function getName(): string
-    {
-        return 'string';
+        $this->applyValidationRule(static fn (mixed $value) => is_string($value) || is_null($value), StringValidatorRuleKey::VALUE_TYPE);
     }
 
     public function required(): self
     {
-        $this->setValidator(static fn (mixed $value) => is_string($value), StringValidatorRuleKey::VALUE_TYPE);
+        $this->applyValidationRule(static fn (mixed $value) => is_string($value), StringValidatorRuleKey::VALUE_TYPE);
         $this->minLength(1);
 
         return $this;
@@ -30,14 +27,14 @@ class StringValidator extends Validator
 
     public function minLength(int $minLength): self
     {
-        $this->setValidator(static fn (mixed $value) => strlen($value) >= $minLength, StringValidatorRuleKey::MIN_LENGTH);
+        $this->applyValidationRule(static fn (mixed $value) => strlen($value) >= $minLength, StringValidatorRuleKey::MIN_LENGTH);
 
         return $this;
     }
 
     public function contains(string $string): self
     {
-        $this->setValidator(static fn (mixed $value) => str_contains($value, $string), StringValidatorRuleKey::CONTAINS);
+        $this->applyValidationRule(static fn (mixed $value) => str_contains($value, $string), StringValidatorRuleKey::CONTAINS);
 
         return $this;
     }

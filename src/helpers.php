@@ -28,3 +28,8 @@ function slugify(string $string, string $divider = '-'): string
 
     return $string;
 }
+
+function toValidatorClassName(string $name): string
+{
+    return ucwords($name) . 'Validator';
+}

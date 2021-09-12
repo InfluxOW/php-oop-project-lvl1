@@ -11,20 +11,29 @@ use Tightenco\Collect\Support\Collection;
 
 abstract class Validator
 {
-    private Collection $validators;
+    private Collection $appliedValidationRules;
     public static ?Collection $customValidationRules = null;
+    protected static string $name;
 
     public function __construct()
     {
-        $this->validators = collect([]);
+        $this->appliedValidationRules = collect([]);
     }
 
-    abstract public static function getName(): string;
+    public static function getName(): string
+    {
+        return static::$name;
+    }
+
+    public static function setName(string $name): void
+    {
+        self::$name = $name;
+    }
 
     public function isValid(mixed $value): bool
     {
         try {
-            $isValid = $this->validators->every(fn (Closure $validate) => $validate($value));
+            $isValid = $this->appliedValidationRules->every(fn (Closure $validate) => $validate($value));
         } catch (Exception | Error) {
             $isValid = false;
         }
@@ -32,17 +41,17 @@ abstract class Validator
         return $isValid;
     }
 
-    protected function setValidator(Closure $validate, string $key): void
+    protected function applyValidationRule(Closure $validate, string $key): void
     {
-        $this->validators->offsetSet($key, $validate);
+        $this->appliedValidationRules->offsetSet($key, $validate);
     }
 
     public static function setCustomValidationRule(Closure $validate, string $key): void
     {
-        if (self::$customValidationRules === null) {
-            self::$customValidationRules = collect([$key => $validate]);
-        } else {
+        if (isset(self::$customValidationRules)) {
             self::$customValidationRules->offsetSet($key, $validate);
+        } else {
+            self::$customValidationRules = collect([$key => $validate]);
         }
     }
 
@@ -50,7 +59,7 @@ abstract class Validator
     public function test(string $rule, ...$arguments): self
     {
         if (isset(self::$customValidationRules) && self::$customValidationRules->has($rule)) {
-            $this->setValidator(static fn (mixed $value) => self::$customValidationRules->get($rule)($value, ...$arguments), slugify($rule, '_'));
+            $this->applyValidationRule(static fn (mixed $value) => self::$customValidationRules->get($rule)($value, ...$arguments), slugify($rule, '_'));
         }
 
         return $this;
