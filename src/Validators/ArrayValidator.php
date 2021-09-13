@@ -17,17 +17,17 @@ class ArrayValidator extends Validator
         $this->applyValidationRule(static fn (mixed $value) => is_array($value), ArrayValidatorRuleKey::VALUE_TYPE);
     }
 
-    public function sizeof(int $size): self
+    public function sizeof(int $size): static
     {
         $this->applyValidationRule(static fn (mixed $value) => count($value) === $size, ArrayValidatorRuleKey::SIZE_OF);
 
         return $this;
     }
 
-    public function shape(array $shape): self
+    public function shape(array $shape): static
     {
         $validateShape = static function (array $array) use ($shape): bool {
-            return collect($shape)->every(static function (Validator $validator, string $key) use ($array) {
+            return collect($shape)->every(static function (Validator $validator, string $key) use ($array): bool {
                 return $validator->isValid($array[$key]);
             });
         };

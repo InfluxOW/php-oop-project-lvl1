@@ -32,7 +32,7 @@ abstract class Validator
         self::$name = $name;
     }
 
-    public function required(): self
+    public function required(): static
     {
         $this->allowsNull = false;
 

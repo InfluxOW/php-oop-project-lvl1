@@ -17,14 +17,14 @@ class NumberValidator extends Validator
         $this->applyValidationRule(static fn (mixed $value) => is_numeric($value), NumberValidatorRuleKey::VALUE_TYPE);
     }
 
-    public function positive(): self
+    public function positive(): static
     {
         $this->applyValidationRule(static fn (mixed $value) => $value > 0, NumberValidatorRuleKey::NUMBER_TYPE);
 
         return $this;
     }
 
-    public function range(int $min, int $max): self
+    public function range(int $min, int $max): static
     {
         $this->applyValidationRule(static fn (mixed $value) => ($value >= $min) && ($value <= $max), NumberValidatorRuleKey::RANGE);
 

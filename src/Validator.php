@@ -22,7 +22,7 @@ class Validator
     /** @var Collection<class-string<ValidatorInterface>> */
     private Collection $validators;
     /** @var Collection<class-string<ValidatorInterface>> */
-    private $customValidators;
+    private Collection $customValidators;
 
     public function __construct()
     {
@@ -40,9 +40,10 @@ class Validator
             $validatorClass = $this->validators->get($name);
             return new $validatorClass();
         }
+
         if ($this->customValidators->has($name)) {
             $validatorClass = $this->customValidators->get($name);
-            return new $validatorClass($name);
+            return new $validatorClass();
         }
 
         throw new Error("Call to undefined method " . $this::class . "::" . $name . "()");
@@ -60,8 +61,9 @@ class Validator
             };
             $validator::setName($name);
             $validatorAlias = ucwords($name) . 'Validator';
-            class_alias($validator::class, $validatorAlias);
-            $this->customValidators->offsetSet($validator::getName(), $validatorAlias);
+            if (class_alias($validator::class, $validatorAlias)) {
+                $this->customValidators->offsetSet($validator::getName(), $validatorAlias);
+            }
         }
 
         $validator::setCustomValidationRule($validate, $method);

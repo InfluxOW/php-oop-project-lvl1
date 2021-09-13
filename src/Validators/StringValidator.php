@@ -17,23 +17,19 @@ class StringValidator extends Validator
         $this->applyValidationRule(static fn (mixed $value) => is_string($value), StringValidatorRuleKey::VALUE_TYPE);
     }
 
-    public function required(): self
+    public function required(): static
     {
-        parent::required();
-
-        $this->minLength(1);
-
-        return $this;
+        return parent::required()->minLength(1);
     }
 
-    public function minLength(int $minLength): self
+    public function minLength(int $minLength): static
     {
         $this->applyValidationRule(static fn (mixed $value) => mb_strlen($value) >= $minLength, StringValidatorRuleKey::MIN_LENGTH);
 
         return $this;
     }
 
-    public function contains(string $string): self
+    public function contains(string $string): static
     {
         $this->applyValidationRule(static fn (mixed $value) => str_contains($value, $string), StringValidatorRuleKey::CONTAINS);
 
