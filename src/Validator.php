@@ -22,7 +22,7 @@ class Validator
     /** @var Collection<class-string<ValidatorInterface>> */
     private Collection $validators;
     /** @var Collection<class-string<ValidatorInterface>> */
-    private $customValidators;
+    private Collection $customValidators;
 
     public function __construct()
     {
