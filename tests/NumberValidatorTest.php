@@ -19,8 +19,7 @@ class NumberValidatorTest extends TestCase
         $this->numberValidator = new NumberValidator();
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_int(): void
+    public function testItCanVerifyIfValueIsInt(): void
     {
         $this->assertTrue($this->numberValidator->isValid(123456789));
         $this->assertTrue($this->numberValidator->isValid(null));
@@ -30,8 +29,7 @@ class NumberValidatorTest extends TestCase
         $this->assertFalse($this->numberValidator->required()->isValid(null));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_positive(): void
+    public function testItCanVerifyIfValueIsPositive(): void
     {
         $positiveNumberValidator = $this->numberValidator->positive();
 
@@ -39,8 +37,7 @@ class NumberValidatorTest extends TestCase
         $this->assertFalse($positiveNumberValidator->isValid(-10));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_in_range(): void
+    public function testItCanVerifyIfValueIsInRange(): void
     {
         $rangeNumberValidator = $this->numberValidator->range(-10, 10);
 
@@ -49,8 +46,7 @@ class NumberValidatorTest extends TestCase
         $this->assertFalse($rangeNumberValidator->isValid(100));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_satisfied_complex_conditions(): void
+    public function testItCanVerifyIfValueSatisfiedComplexConditions(): void
     {
         $complexValidator = $this->numberValidator->positive()->range(-10, 10);
 
@@ -58,8 +54,7 @@ class NumberValidatorTest extends TestCase
         $this->assertFalse($complexValidator->isValid(-5));
     }
 
-    /** @test */
-    public function it_can_be_extended_with_custom_validation_rules(): void
+    public function testItCanBeExtendedWithCustomValidationRules(): void
     {
         $validator = new Validator();
 

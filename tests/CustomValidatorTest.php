@@ -10,8 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class CustomValidatorTest extends TestCase
 {
-    /** @test */
-    public function it_can_be_extended_with_custom_validators(): void
+    public function testItCanBeExtendedWithCustomValidators(): void
     {
         $validator = new Validator();
 

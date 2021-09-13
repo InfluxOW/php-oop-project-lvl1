@@ -19,8 +19,7 @@ class StringValidatorTest extends TestCase
         $this->stringValidator = new StringValidator();
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_string(): void
+    public function testItCanVerifyIfValueIsString(): void
     {
         $this->assertTrue($this->stringValidator->isValid('Test string'));
         $this->assertTrue($this->stringValidator->isValid(null));
@@ -30,16 +29,14 @@ class StringValidatorTest extends TestCase
         $this->assertFalse($this->stringValidator->required()->isValid(null));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_empty_string_or_null(): void
+    public function testItCanVerifyIfValueIsEmptyStringOrNull(): void
     {
         $this->assertTrue($this->stringValidator->isValid(''));
 
         $this->assertFalse($this->stringValidator->required()->isValid(''));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_contains_string(): void
+    public function testItCanVerifyIfValueContainsString(): void
     {
         $this->assertTrue($this->stringValidator->contains('What')->isValid('What does the fox say?'));
 
@@ -47,8 +44,7 @@ class StringValidatorTest extends TestCase
         $this->assertFalse($this->stringValidator->contains('thefox')->isValid('What does the fox say?'));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_longer_than_min_length(): void
+    public function testItCanVerifyIfValueIsLongerThanMinLength(): void
     {
         $this->assertTrue($this->stringValidator->minLength(10)->isValid('What does the fox say?'));
         $this->assertTrue($this->stringValidator->minLength(0)->isValid(''));
@@ -57,8 +53,7 @@ class StringValidatorTest extends TestCase
         $this->assertFalse($this->stringValidator->minLength(5)->isValid('Test'));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_satisfied_complex_conditions(): void
+    public function testItCanVerifyIfValueSatisfiedComplexConditions(): void
     {
         $complexValidator = $this->stringValidator->required()->minLength(10)->contains('What');
 
@@ -68,8 +63,7 @@ class StringValidatorTest extends TestCase
         $this->assertFalse($complexValidator->isValid('hat does the fox say?'));
     }
 
-    /** @test */
-    public function it_can_be_extended_with_custom_validation_rules(): void
+    public function testItCanBeExtendedWithCustomValidationRules(): void
     {
         $validator = new Validator();
 

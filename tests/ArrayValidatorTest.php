@@ -19,8 +19,7 @@ class ArrayValidatorTest extends TestCase
         $this->arrayValidator = new ArrayValidator();
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_array(): void
+    public function testItCanVerifyIfValueIsArray(): void
     {
         $this->assertTrue($this->arrayValidator->isValid([]));
         $this->assertTrue($this->arrayValidator->isValid(null));
@@ -30,8 +29,7 @@ class ArrayValidatorTest extends TestCase
         $this->assertFalse($this->arrayValidator->required()->isValid(null));
     }
 
-    /** @test */
-    public function it_can_verify_if_value_is_of_specified_size(): void
+    public function testItCanVerifyIfValueIsOfSpecifiedSize(): void
     {
         $sizeOfValidator = $this->arrayValidator->sizeof(2);
 
@@ -41,8 +39,7 @@ class ArrayValidatorTest extends TestCase
         $this->assertFalse($sizeOfValidator->isValid(null));
     }
 
-    /** @test */
-    public function it_can_verify_if_array_has_specified_shape(): void
+    public function testItCanVerifyIfArrayHasSpecifiedShape(): void
     {
         $validator = new Validator();
         $shapeValidator = $this->arrayValidator->shape(['name' => $validator->string()->minLength(3), 'surname' => $validator->string()->minLength(5)->contains('kirk'), 'age' => $validator->number()->positive()]);
