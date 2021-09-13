@@ -14,7 +14,7 @@ class NumberValidator extends Validator
     {
         parent::__construct();
 
-        $this->applyValidationRule(static fn (mixed $value) => is_int($value), NumberValidatorRuleKey::VALUE_TYPE);
+        $this->applyValidationRule(static fn (mixed $value) => is_numeric($value), NumberValidatorRuleKey::VALUE_TYPE);
     }
 
     public function positive(): self
@@ -26,7 +26,7 @@ class NumberValidator extends Validator
 
     public function range(int $min, int $max): self
     {
-        $this->applyValidationRule(static fn (mixed $value) => in_array($value, range($min, $max), true), NumberValidatorRuleKey::RANGE);
+        $this->applyValidationRule(static fn (mixed $value) => ($value >= $min) && ($value <= $max), NumberValidatorRuleKey::RANGE);
 
         return $this;
     }
