@@ -13,9 +13,6 @@
         "test": "phpunit tests"
     },
     "autoload": {
-        "files": [
-            "src/helpers.php"
-        ],
         "psr-4": {
             "Hexlet\\Validator\\": "src/"
         }
@@ -36,7 +33,7 @@
     },
     "require": {
         "php": "^8.0",
-        "tightenco/collect": "^8.34"
+        "illuminate/support": "^8.60"
     },
     "config": {
         "optimize-autoloader": true,

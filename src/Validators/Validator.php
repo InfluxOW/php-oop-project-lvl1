@@ -7,7 +7,8 @@ namespace Hexlet\Validator\Validators;
 use Closure;
 use Error;
 use Exception;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 abstract class Validator
 {
@@ -59,7 +60,7 @@ abstract class Validator
     public function test(string $rule, ...$arguments): self
     {
         if (isset(self::$customValidationRules) && self::$customValidationRules->has($rule)) {
-            $this->applyValidationRule(static fn (mixed $value) => self::$customValidationRules->get($rule)($value, ...$arguments), slugify($rule, '_'));
+            $this->applyValidationRule(static fn (mixed $value) => self::$customValidationRules->get($rule)($value, ...$arguments), Str::slug($rule, '_'));
         }
 
         return $this;

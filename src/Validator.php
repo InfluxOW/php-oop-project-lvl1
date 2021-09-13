@@ -10,7 +10,7 @@ use Hexlet\Validator\Validators\ArrayValidator;
 use Hexlet\Validator\Validators\NumberValidator;
 use Hexlet\Validator\Validators\StringValidator;
 use Hexlet\Validator\Validators\Validator as ValidatorInterface;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 /**
  * @method StringValidator string()
@@ -59,7 +59,7 @@ class Validator
             {
             };
             $validator::setName($name);
-            $validatorAlias = toValidatorClassName($name);
+            $validatorAlias = ucwords($name) . 'Validator';
             class_alias($validator::class, $validatorAlias);
             $this->customValidators->offsetSet($validator::getName(), $validatorAlias);
         }
