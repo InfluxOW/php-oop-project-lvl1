@@ -14,12 +14,13 @@ class StringValidator extends Validator
     {
         parent::__construct();
 
-        $this->applyValidationRule(static fn (mixed $value) => is_string($value) || is_null($value), StringValidatorRuleKey::VALUE_TYPE);
+        $this->applyValidationRule(static fn (mixed $value) => is_string($value), StringValidatorRuleKey::VALUE_TYPE);
     }
 
     public function required(): self
     {
-        $this->applyValidationRule(static fn (mixed $value) => is_string($value), StringValidatorRuleKey::VALUE_TYPE);
+        parent::required();
+
         $this->minLength(1);
 
         return $this;

@@ -33,16 +33,16 @@ class ArrayValidatorTest extends TestCase
     {
         $sizeOfValidator = $this->arrayValidator->sizeof(2);
 
+        $this->assertTrue($sizeOfValidator->isValid(null));
         $this->assertTrue($sizeOfValidator->isValid([1, 2]));
 
         $this->assertFalse($sizeOfValidator->isValid([]));
-        $this->assertFalse($sizeOfValidator->isValid(null));
     }
 
     public function testItCanVerifyIfArrayHasSpecifiedShape(): void
     {
         $validator = new Validator();
-        $shapeValidator = $this->arrayValidator->shape(['name' => $validator->string()->minLength(3), 'surname' => $validator->string()->minLength(5)->contains('kirk'), 'age' => $validator->number()->positive()]);
+        $shapeValidator = $this->arrayValidator->shape(['name' => $validator->string()->minLength(3), 'surname' => $validator->string()->required()->minLength(5)->contains('kirk'), 'age' => $validator->number()->positive()]);
 
         $this->assertTrue($shapeValidator->isValid(['name' => 'Bob', 'surname' => 'Odenkirk', 'age' => 58]));
 

@@ -14,14 +14,7 @@ class ArrayValidator extends Validator
     {
         parent::__construct();
 
-        $this->applyValidationRule(static fn (mixed $value) => is_array($value) || is_null($value), ArrayValidatorRuleKey::VALUE_TYPE);
-    }
-
-    public function required(): self
-    {
         $this->applyValidationRule(static fn (mixed $value) => is_array($value), ArrayValidatorRuleKey::VALUE_TYPE);
-
-        return $this;
     }
 
     public function sizeof(int $size): self

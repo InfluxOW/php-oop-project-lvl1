@@ -14,14 +14,7 @@ class NumberValidator extends Validator
     {
         parent::__construct();
 
-        $this->applyValidationRule(static fn (mixed $value) => is_int($value) || is_null($value), NumberValidatorRuleKey::VALUE_TYPE);
-    }
-
-    public function required(): self
-    {
         $this->applyValidationRule(static fn (mixed $value) => is_int($value), NumberValidatorRuleKey::VALUE_TYPE);
-
-        return $this;
     }
 
     public function positive(): self

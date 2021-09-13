@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 
 abstract class Validator
 {
+    protected bool $allowsNull = true;
     private Collection $appliedValidationRules;
     public static ?Collection $customValidationRules = null;
     protected static string $name;
@@ -31,8 +32,19 @@ abstract class Validator
         self::$name = $name;
     }
 
+    public function required(): self
+    {
+        $this->allowsNull = false;
+
+        return $this;
+    }
+
     public function isValid(mixed $value): bool
     {
+        if ($this->allowsNull && is_null($value)) {
+            return true;
+        }
+
         try {
             $isValid = $this->appliedValidationRules->every(fn (Closure $validate) => $validate($value));
         } catch (Exception | Error) {
