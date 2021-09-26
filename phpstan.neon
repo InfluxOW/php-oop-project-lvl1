@@ -2,11 +2,7 @@ parameters:
     level: 8
     paths:
         - src
+        - tests
 
     checkMissingIterableValueType: false
-
     reportUnmatchedIgnoredErrors: false
-
-    ignoreErrors:
-     - '#with no typehint specified#'
-     - '#Variable property access on object#'

@@ -9,7 +9,7 @@ use Error;
 use Hexlet\Validator\Validators\ArrayValidator;
 use Hexlet\Validator\Validators\NumberValidator;
 use Hexlet\Validator\Validators\StringValidator;
-use Hexlet\Validator\Validators\Validator as ValidatorInterface;
+use Hexlet\Validator\Validators\Validator as AbstractValidator;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,11 +17,11 @@ use Illuminate\Support\Collection;
  * @method NumberValidator number()
  * @method ArrayValidator array()
  */
-class Validator
+final class Validator
 {
-    /** @var Collection<class-string<ValidatorInterface>> */
+    /** @var Collection<class-string<AbstractValidator>> */
     private Collection $validators;
-    /** @var Collection<class-string<ValidatorInterface>> */
+    /** @var Collection<class-string<AbstractValidator>> */
     private Collection $customValidators;
 
     public function __construct()
@@ -34,40 +34,39 @@ class Validator
         $this->customValidators = collect([]);
     }
 
-    public function __call(string $name, array $arguments): ValidatorInterface
+    public function __call(string $method, array $arguments): AbstractValidator
     {
-        if ($this->validators->has($name)) {
-            $validatorClass = $this->validators->get($name);
-            return new $validatorClass();
+        $validatorClass = $this->getValidatorClassByName($method);
+
+        if ($validatorClass === null) {
+            throw new Error("Call to undefined method " . $this::class . "::" . $method . "()");
         }
 
-        if ($this->customValidators->has($name)) {
-            $validatorClass = $this->customValidators->get($name);
-            return new $validatorClass();
-        }
-
-        throw new Error("Call to undefined method " . $this::class . "::" . $name . "()");
+        return new $validatorClass();
     }
 
-    public function addValidator(string $name, string $method, Closure $validate): self
+    public function addValidator(string $name, string $ruleKey, Closure $validate): self
     {
-        if ($this->validators->has($name)) {
-            $validator = $this->validators->get($name);
-        } elseif ($this->customValidators->has($name)) {
-            $validator = $this->customValidators->get($name);
-        } else {
-            $validator = new class extends ValidatorInterface
-            {
+        $validatorClass = $this->getValidatorClassByName($name);
+
+        if ($validatorClass === null) {
+            $validatorClass = new class extends AbstractValidator {
             };
-            $validator::setName($name);
-            $validatorAlias = ucwords($name) . 'Validator';
-            if (class_alias($validator::class, $validatorAlias)) {
-                $this->customValidators->offsetSet($validator::getName(), $validatorAlias);
-            }
+            $validatorClass::setName($name);
+            $validatorClassAlias = ucwords($name) . 'Validator';
+            class_alias($validatorClass::class, $validatorClassAlias);
+            $this->customValidators->offsetSet($validatorClass::getName(), $validatorClassAlias);
         }
 
-        $validator::setCustomValidationRule($validate, $method);
+        $validatorClass::setCustomValidationRule($validate, $ruleKey);
 
         return $this;
+    }
+
+    private function getValidatorClassByName(string $name): ?string
+    {
+        $validatorClass = $this->validators->merge($this->customValidators)->get($name);
+
+        return (is_string($validatorClass) && class_exists($validatorClass)) ? $validatorClass : null;
     }
 }
